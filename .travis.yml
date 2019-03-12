@@ -1,0 +1,41 @@
+language: node_js
+node_js:
+- '8'
+env:
+  global:
+  - GH_USER_EMAIL="travis@example.org"
+  - GH_USER_NAME="cozy-bot"
+  - DEPLOY_REPOSITORY="git@github.com:konnectors/thomann.git"
+  - secure: QD0YIJihnpnbJLRcMyOgpARgSqH0RSL+EbnSrooGUcz2VlF751KYiyfXH0Cyx+hoUHD+9ZvweqcfhaTwUrXrwW92xODY+JRkxHrsKUwCmzBRDjT/91bC5960GCuAwmLUGS5GGGrtPYi/24mweoqzAIjGFE3GYQGCBZdhKSOV3BjSzfnTZrcZHvwfvewWsC4w1Nr/1+4O5fLL2PyYARJWy8PZaHmoW35GuxBnx6/MqcTlbuP95Uqsd6WVnlnn4BCaTGA6LeDHodMq72I2pGAJzS3TKMOiLHoPFG2uZ7s+CsOlbbyD96vrtKnVvMFGrPGd9Li8lOm5Rnyrv7rBHIUgYysIpqlh8t4t1wARtrQgp/4i0DsKy3q0rOkHQOGo8KDjfuGHfOTcHu6IQB7TCKFW5s+KPB4BgYxrHE9XNrU2Tscjt1LQragQ3MNXr7vgxDjsoVZQgYThniUNDSrCbodVqdDLkjXscgoJIvpitEFKpCPyZETljAMI1w41Q0xAYWk1fVVH0beWld+C2+SybWLVB8M1oylws/oE64wiE9QCUZdodSBw3A2HLP528ghSuI2zrP5Uqlzs2VLpTrgujWrx9m6ft9lzA5tysVmDD2+Y7LgE5K1GtOKRXPay0jggqr+sWBpPyKPt5FM5p1fl38dbsdwngnUE+YVBWkiwszBu7/M=
+cache:
+  yarn: true
+  directories:
+  - node_modules
+branches:
+  except:
+  - build
+  - build-debug
+script:
+- yarn lint
+- yarn build
+- yarn run check
+deploy:
+- provider: script
+  skip-cleanup: true
+  script: DEPLOY_BRANCH=build yarn deploy && yarn cozyPublish
+  on:
+    branch: master
+- provider: script
+  skip-cleanup: true
+  script: DEPLOY_BRANCH=build yarn deploy && yarn cozyPublish
+  on:
+    tags: true
+before_install:
+- openssl aes-256-cbc -K $encrypted_bfd783366047_key -iv $encrypted_bfd783366047_iv
+  -in github_deploy_key.enc -out /tmp/github_deploy_key -d
+- eval "$(ssh-agent -s)"
+- chmod 600 /tmp/github_deploy_key
+- ssh-add /tmp/github_deploy_key
+after_deploy:
+- rm /tmp/github_deploy_key
+- ssh-add -D
