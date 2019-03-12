@@ -58,10 +58,10 @@ module.exports = {
   externals: [
     {
       // pouchdb comes from cozy-client-js and is not used by the connectors
-      pouchdb: 'PouchDB'
+      pouchdb: 'PouchDB',
       // If you want to make the built version of the connector lighter and you do not read pdf
       // files content
-      // 'pdfjs-dist': 'pdfjs'
+      'pdfjs-dist': 'pdfjs'
     }
   ]
 }
