@@ -34,6 +34,7 @@
     "build": "webpack",
     "lint": "eslint --fix .",
     "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-git@github.com:konnectors/thomann.git}",
+    "deploydebug": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build-debug} --repo=${DEPLOY_REPOSITORY:-git@github.com:konnectors/thomann.git}",
     "cozyPublish": "cozy-app-publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})",
     "travisDeployKey": "./bin/generate_travis_deploy_key"
   },
