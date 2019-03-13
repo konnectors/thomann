@@ -34,19 +34,17 @@
     "build": "webpack",
     "lint": "eslint --fix .",
     "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-git@github.com:konnectors/thomann.git}",
-    "deploydebug": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build-debug} --repo=${DEPLOY_REPOSITORY:-git@github.com:konnectors/thomann.git}",
     "cozyPublish": "cozy-app-publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})",
     "travisDeployKey": "./bin/generate_travis_deploy_key"
   },
   "dependencies": {
-    "cozy-konnector-libs": "4.14.13-alpha.0",
-    "isomorphic-fetch": "^2.2.1",
+    "cozy-konnector-libs": "4.14.12",
     "moment": "2.24.0"
   },
   "devDependencies": {
     "copy-webpack-plugin": "5.0.1",
     "cozy-app-publish": "0.12.3",
-    "cozy-jobs-cli": "1.7.15-alpha.0",
+    "cozy-jobs-cli": "1.7.14",
     "eslint": "5.15.1",
     "eslint-config-cozy-app": "1.1.12",
     "eslint-plugin-prettier": "3.0.1",
