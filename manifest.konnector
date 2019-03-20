@@ -5,7 +5,7 @@
   "language": "node",
   "icon": "icon.png",
   "slug": "thomann",
-  "source": "git://github.com/konnectors/thomann.git",
+  "source": "git@github.com:konnectors/thomann.git",
   "editor": "Romain Clement",
   "vendor_link": "https://www.thomann.de",
   "categories": [
