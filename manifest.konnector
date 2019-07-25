@@ -3,7 +3,7 @@
   "name": "Thomann",
   "type": "konnector",
   "language": "node",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "slug": "thomann",
   "source": "git@github.com:konnectors/thomann.git",
   "editor": "Romain Clement",
