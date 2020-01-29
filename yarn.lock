@@ -1364,10 +1364,10 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
-copy-webpack-plugin@5.0.5:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-5.0.5.tgz#731df6a837a2ef0f8f8e2345bdfe9b7c62a2da68"
-  integrity sha512-7N68eIoQTyudAuxkfPT7HzGoQ+TsmArN/I3HFwG+lVE3FNzqvZKIiaxtYh4o3BIznioxUvx9j26+Rtsc9htQUQ==
+copy-webpack-plugin@5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-5.1.1.tgz#5481a03dea1123d88a988c6ff8b78247214f0b88"
+  integrity sha512-P15M5ZC8dyCjQHWwd4Ia/dm0SgVvZJMYeykVIVYXbGyqO4dWB5oyPHp9i7wjwo5LhtlhKbiBCdS2NvM07Wlybg==
   dependencies:
     cacache "^12.0.3"
     find-cache-dir "^2.1.0"
@@ -1379,7 +1379,7 @@ copy-webpack-plugin@5.0.5:
     normalize-path "^3.0.0"
     p-limit "^2.2.1"
     schema-utils "^1.0.0"
-    serialize-javascript "^2.1.0"
+    serialize-javascript "^2.1.2"
     webpack-log "^2.0.0"
 
 core-js@^2.4.0, core-js@^2.5.3:
@@ -1495,35 +1495,7 @@ cozy-jobs-cli@1.11.2:
     pretty "2.0.0"
     strip-json-comments "3.0.1"
 
-cozy-konnector-libs@4.32.4:
-  version "4.32.4"
-  resolved "https://registry.yarnpkg.com/cozy-konnector-libs/-/cozy-konnector-libs-4.32.4.tgz#cf32e6a39ba6cac20508b0b2b19442bebec45e2a"
-  integrity sha512-w3IJ98gsdjS3LO/qPfKBEcQ9jR3iJqJzTlG4bdncFD/Y8BXNUvcFxdh6AZdFV3yAc05GhOxeH36f+y3IJL2wwg==
-  dependencies:
-    babel-runtime "^6.26.0"
-    bluebird "^3.7.2"
-    bluebird-retry "^0.11.0"
-    btoa "1.2.1"
-    cheerio "^1.0.0-rc.3"
-    classificator "^0.3.3"
-    cozy-client "^10.5.0"
-    cozy-client-js "^0.16.4"
-    cozy-doctypes "^1.72.0"
-    cozy-logger "^1.6.0"
-    date-fns "^1.30.1"
-    file-type "^13.1.2"
-    geco "^0.11.1"
-    lodash-id "^0.14.0"
-    lowdb "^1.0.0"
-    mime-types "^2.1.26"
-    raven "^2.6.4"
-    raw-body "^2.4.1"
-    request "^2.88.0"
-    request-debug "^0.2.0"
-    request-promise "^4.2.5"
-    strip-json-comments "^3.0.1"
-
-cozy-konnector-libs@^4.32.4:
+cozy-konnector-libs@4.32.4, cozy-konnector-libs@^4.32.4:
   version "4.32.4"
   resolved "https://registry.yarnpkg.com/cozy-konnector-libs/-/cozy-konnector-libs-4.32.4.tgz#cf32e6a39ba6cac20508b0b2b19442bebec45e2a"
   integrity sha512-w3IJ98gsdjS3LO/qPfKBEcQ9jR3iJqJzTlG4bdncFD/Y8BXNUvcFxdh6AZdFV3yAc05GhOxeH36f+y3IJL2wwg==
@@ -5541,11 +5513,6 @@ send@0.17.1:
     on-finished "~2.3.0"
     range-parser "~1.2.1"
     statuses "~1.5.0"
-
-serialize-javascript@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-2.1.1.tgz#952907a04a3e3a75af7f73d92d15e233862048b2"
-  integrity sha512-MPLPRpD4FNqWq9tTIjYG5LesFouDhdyH0EPY3gVK4DRD5+g4aDqdNSzLIwceulo3Yj+PL1bPh6laE5+H6LTcrQ==
 
 serialize-javascript@^2.1.2:
   version "2.1.2"
