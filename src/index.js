@@ -35,11 +35,19 @@ async function start(fields) {
   await authenticate(fields.login, fields.password)
   log('info', 'Successfully logged in')
 
-  log('info', 'Fetching the list of documents')
-  const $ = await request(ordersListUrl)
+  let documents = []
 
-  log('info', 'Parsing list of documents')
-  const documents = await parseDocuments($)
+  log('info', 'Fetching the list of documents')
+  let $ = await request(ordersListUrl)
+
+  while ($) {
+    log('info', 'Parsing list of documents')
+    const pageDocuments = await parseDocuments($)
+    documents.push(...pageDocuments)
+
+    log('info', 'Finding next page')
+    $ = await findNextDocumentsPage($)
+  }
 
   log('info', 'Saving data to Cozy')
   await saveBills(documents, fields, {
@@ -123,6 +131,16 @@ async function parseDocuments($) {
   }
 
   return documents
+}
+
+async function findNextDocumentsPage($) {
+  const nextPage = $('.rs-pagination > .container > .button.next').attr('href')
+
+  if (nextPage) {
+    return await request(`${baseUrl}${nextPage}`)
+  } else {
+    return null
+  }
 }
 
 function parseOrderNumber(number) {
