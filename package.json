@@ -1,6 +1,6 @@
 {
   "name": "cozy-konnector-thomann",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "",
   "repository": {
     "type": "git",
@@ -42,6 +42,6 @@
   },
   "devDependencies": {
     "cozy-jobs-cli": "1.15.7",
-    "cozy-konnector-build": "1.1.5"
+    "cozy-konnector-build": "1.1.7"
   }
 }
