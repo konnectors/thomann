@@ -5,7 +5,6 @@ process.env.SENTRY_DSN =
 const {
   BaseKonnector,
   requestFactory,
-  signin,
   scrape,
   saveBills,
   log
@@ -17,13 +16,16 @@ const request = requestFactory({
   debug: false,
   cheerio: true,
   json: false,
-  jar: true
+  jar: true,
+  followAllRedirects: true
 })
 
 const vendor = 'thomann'
 const baseUrl = 'https://www.thomann.de'
-const loginUrl = `${baseUrl}/intl/mythomann_login.html`
-const ordersListUrl = `${baseUrl}/intl/mythomann_orderlist.html`
+const indexUrl = `${baseUrl}/fr/index.html`
+const loginUrl = `${baseUrl}/fr/mythomann_login.html`
+const logoutUrl = `${baseUrl}/fr/mythomann_logout.html`
+const ordersListUrl = `${baseUrl}/fr/mythomann_orderlist.html`
 
 module.exports = new BaseKonnector(start)
 
@@ -58,22 +60,23 @@ async function start(fields) {
 
 // this shows authentication using the [signin function](https://github.com/konnectors/libs/blob/master/packages/cozy-konnector-libs/docs/api.md#module_signin)
 // even if this in another domain here, but it works as an example
-function authenticate(username, password) {
-  return signin({
-    url: loginUrl,
-    formSelector: `form[method='post']`,
+async function authenticate(username, password) {
+  const $ = await request(loginUrl, {
+    method: 'POST',
     formData: {
       uname: username,
-      passw: password
-    },
-    validate: (statusCode, $) => {
-      if ($('svg.rs-icon-cc-sb-logout').length === 1) {
-        return true
-      } else {
-        return false
-      }
+      passw: password,
+      loginpermanent: 'on',
+      o: indexUrl,
+      logintry: '1',
+      usezip: '0'
     }
   })
+
+  const logoutLink = $(`a[href="${logoutUrl}"]`)
+  if (logoutLink.length < 1) {
+    throw new Error('LOGIN_FAILED')
+  }
 }
 
 // The goal of this function is to parse a html page wrapped by a cheerio instance
@@ -83,33 +86,39 @@ async function parseDocuments($) {
     $,
     {
       date: {
-        sel: '.order-date',
+        sel:
+          '.row:nth-child(1) > .column:nth-child(1) > .mythomann-order-teaser__detail > .mythomann-order-teaser__detail-value',
         parse: parseDate
       },
       number: {
-        sel: '.order-nr',
+        sel:
+          '.row:nth-child(1) > .column:nth-child(2) > .mythomann-order-teaser__detail > .mythomann-order-teaser__detail-value',
         parse: parseOrderNumber
       },
       amount: {
-        sel: '.order-sum',
+        sel:
+          '.row:nth-child(2) > .column:nth-child(1) > .mythomann-order-teaser__detail > .mythomann-order-teaser__detail-value',
         parse: parseAmount
       },
       currency: {
-        sel: '.order-sum',
+        sel:
+          '.row:nth-child(2) > .column:nth-child(1) > .mythomann-order-teaser__detail > .mythomann-order-teaser__detail-value',
         parse: parseCurrency
       },
       details: {
-        sel: '.details a',
+        sel: '.mythomann-order-teaser__button-row a',
         attr: 'href'
       }
     },
-    '.order-entry'
+    '#order-list > .mythomann-order-teaser > .mythomann-order-teaser__details-wrapper > .mythomann-order-teaser__details'
   )
 
   let documents = []
   for (let order of orders) {
     const $details = await request(order.details)
-    const fileurl = $details('.orderdata a.tr-link-pdf').attr('href')
+    const fileurl = $details(
+      'a.mythomann-order-history__entry-pdf-button'
+    ).attr('href')
     const filename = `${order.date.format(
       'YYYY-MM-DD'
     )}_${vendor}_${order.amount.toFixed(2)}${order.currency}_${
@@ -134,13 +143,28 @@ async function parseDocuments($) {
 }
 
 async function findNextDocumentsPage($) {
-  const nextPage = $('.rs-pagination > .container > .button.next').attr('href')
+  const pages = scrape(
+    $,
+    {
+      url: {
+        attr: 'href'
+      },
+      active: {
+        attr: 'class',
+        parse: classes =>
+          classes.indexOf('fx-pagination__pages-button--active') !== -1
+      }
+    },
+    '#order-list > .fx-pagination > .fx-pagination__pages > .fx-pagination__pages-button'
+  )
 
-  if (nextPage) {
-    return await request(`${baseUrl}${nextPage}`)
-  } else {
-    return null
+  const activePageIndex = pages.findIndex(element => element.active)
+  if (activePageIndex > -1 && activePageIndex < pages.length - 1) {
+    const nextPageUrl = pages[activePageIndex + 1].url
+    return await request(`${baseUrl}${nextPageUrl}`)
   }
+
+  return null
 }
 
 function parseOrderNumber(number) {
