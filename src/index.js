@@ -33,6 +33,9 @@ module.exports = new BaseKonnector(start)
 // information (fields). When you run this connector yourself in "standalone" mode or "dev" mode,
 // the account information come from ./konnector-dev-config.json file
 async function start(fields) {
+  log('info', 'Access homepage to get initial cookies')
+  await request(indexUrl)
+
   log('info', 'Authenticating ...')
   await authenticate(fields.login, fields.password)
   log('info', 'Successfully logged in')
@@ -67,7 +70,7 @@ async function authenticate(username, password) {
       uname: username,
       passw: password,
       loginpermanent: 'on',
-      o: indexUrl,
+      o: loginUrl,
       logintry: '1',
       usezip: '0'
     }
