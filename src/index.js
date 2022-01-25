@@ -24,7 +24,7 @@ const vendor = 'thomann'
 const baseUrl = 'https://www.thomann.de'
 const indexUrl = `${baseUrl}/fr/index.html`
 const loginUrl = `${baseUrl}/fr/mythomann_login.html`
-const logoutUrl = `${baseUrl}/fr/mythomann_logout.html`
+const accountUrl = `${baseUrl}/fr/mythomann.html`
 const ordersListUrl = `${baseUrl}/fr/mythomann_orderlist.html`
 
 module.exports = new BaseKonnector(start)
@@ -64,7 +64,7 @@ async function start(fields) {
 // this shows authentication using the [signin function](https://github.com/konnectors/libs/blob/master/packages/cozy-konnector-libs/docs/api.md#module_signin)
 // even if this in another domain here, but it works as an example
 async function authenticate(username, password) {
-  const $ = await request(loginUrl, {
+  const res = await request(loginUrl, {
     method: 'POST',
     formData: {
       uname: username,
@@ -73,11 +73,11 @@ async function authenticate(username, password) {
       o: loginUrl,
       logintry: '1',
       usezip: '0'
-    }
+    },
+    resolveWithFullResponse: true
   })
 
-  const logoutLink = $(`a[href="${logoutUrl}"]`)
-  if (logoutLink.length < 1) {
+  if (res.statusCode === 200 && res.request.uri.href !== accountUrl) {
     throw new Error('LOGIN_FAILED')
   }
 }
