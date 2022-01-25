@@ -56,6 +56,8 @@ async function start(fields) {
 
   log('info', 'Saving data to Cozy')
   await saveBills(documents, fields, {
+    sourceAccount: this.accountId,
+    sourceAccountIdentifier: fields.login,
     identifiers: [vendor],
     contentType: 'application/pdf'
   })
