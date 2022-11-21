@@ -7,8 +7,12 @@ const {
   requestFactory,
   scrape,
   saveBills,
-  log
+  log,
+  cozyClient
 } = require('cozy-konnector-libs')
+
+const models = cozyClient.new.models
+const { Qualification } = models.document
 
 const request = requestFactory({
   debug: false,
@@ -53,9 +57,11 @@ async function start(fields) {
 
   log('info', 'Saving data to Cozy')
   await saveBills(documents, fields, {
+    keys: ['vendorRef'],
     sourceAccount: this.accountId,
     sourceAccountIdentifier: fields.login,
     identifiers: [vendor],
+    fileIdAttributes: ['vendorRef'],
     contentType: 'application/pdf'
   })
 }
@@ -123,9 +129,16 @@ async function parseDocuments($) {
       currency: order.currency,
       fileurl: fileurl,
       filename: filename,
-      metadata: {
-        importDate: new Date(),
-        version: 1
+      vendorRef: order.number,
+      fileAttributes: {
+        metadata: {
+          contentAuthor: 'thomann.de',
+          issueDate: new Date(),
+          datetime: order.date,
+          datetimeLabel: `issueDate`,
+          carbonCopy: true,
+          qualification: Qualification.getByLabel('other_invoice')
+        }
       }
     })
   }
