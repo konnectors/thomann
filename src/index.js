@@ -91,23 +91,19 @@ async function parseDocuments($) {
     $,
     {
       date: {
-        sel:
-          '.row:nth-child(1) > .column:nth-child(1) > .mythomann-order-teaser__detail > .mythomann-order-teaser__detail-value',
+        sel: '.row:nth-child(1) > .column:nth-child(1) > .mythomann-order-teaser__detail > .mythomann-order-teaser__detail-value',
         parse: parseDate
       },
       number: {
-        sel:
-          '.row:nth-child(1) > .column:nth-child(2) > .mythomann-order-teaser__detail > .mythomann-order-teaser__detail-value',
+        sel: '.row:nth-child(1) > .column:nth-child(2) > .mythomann-order-teaser__detail > .mythomann-order-teaser__detail-value',
         parse: parseOrderNumber
       },
       amount: {
-        sel:
-          '.row:nth-child(2) > .column:nth-child(1) > .mythomann-order-teaser__detail > .mythomann-order-teaser__detail-value',
+        sel: '.row:nth-child(2) > .column:nth-child(1) > .mythomann-order-teaser__detail > .mythomann-order-teaser__detail-value',
         parse: parseAmount
       },
       currency: {
-        sel:
-          '.row:nth-child(2) > .column:nth-child(1) > .mythomann-order-teaser__detail > .mythomann-order-teaser__detail-value',
+        sel: '.row:nth-child(2) > .column:nth-child(1) > .mythomann-order-teaser__detail > .mythomann-order-teaser__detail-value',
         parse: parseCurrency
       },
       details: {
