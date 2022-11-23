@@ -59,6 +59,9 @@
       "short_description": "Récupère vos factures Thomann",
       "long_description": "Ce connecteur récupère vos factures Thomann",
       "permissions": {
+        "carboncopy": {
+          "description": "Utilisé pour certifier que vos fichiers sont copie conforme avec les documents d'origine"
+        },
         "bank operations": {
           "description": "Utilisé pour relier les factures à des operations bancaires"
         },
@@ -77,6 +80,9 @@
       "short_description": "Fetch bills from Thomann",
       "long_description": "This connector fetches your bills from Thomann",
       "permissions": {
+        "carboncopy": {
+          "description": "Use to certify your files are the exact copy of the originals"
+        },
         "bank operations": {
           "description": "Required to link bank operations to bills"
         },
