@@ -9,7 +9,6 @@
   "keywords": [],
   "author": "Romain Clement",
   "license": "AGPL-3.0",
-  "main": "./src/index.js",
   "eslintConfig": {
     "extends": [
       "cozy-app"
@@ -37,8 +36,7 @@
     "travisDeployKey": "./bin/generate_travis_deploy_key"
   },
   "dependencies": {
-    "cozy-konnector-libs": "4.56.2",
-    "moment": "2.29.4"
+    "cozy-konnector-libs": "4.56.2"
   },
   "devDependencies": {
     "cozy-jobs-cli": "1.20.0",
