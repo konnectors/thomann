@@ -30,6 +30,9 @@
   ],
   "screenshots": [],
   "permissions": {
+    "carbon_copy": {
+      "type": "io.cozy.certified.carbon_copy"
+    },
     "bank operations": {
       "type": "io.cozy.bank.operations"
     },
