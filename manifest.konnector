@@ -93,5 +93,15 @@
     }
   },
   "banksTransactionRegExp": "\\bthomann\\b",
+  "qualification_labels": [
+    "other_invoice"
+  ],
+  "features": [
+    "LOGIN_OK",
+    "METADATA_DEDUP",
+    "CARBON_COPY",
+    "DOC_QUALIFICATION_V2",
+    "SENTRY_V2"
+  ],
   "manifest_version": "2"
 }
