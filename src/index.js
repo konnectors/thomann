@@ -93,10 +93,8 @@ async function parseDocuments($) {
   const orders = []
   $('.mythomann-order-teaser').each((i, el) => {
     const details = $(el)
-      .find('.mythomann-order-teaser__details-wrapper')
-      .html()
-      .match(/a href="(.*)>/g)[0]
-      .split('"')[1]
+      .find('.mythomann-order-teaser__details-wrapper > a')
+      .attr('href')
     const billsData = $(el)
       .find('.mythomann-order-teaser__detail')
       .text()
